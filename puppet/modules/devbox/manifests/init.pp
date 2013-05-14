@@ -6,6 +6,11 @@ class devbox ($hostname, $documentroot, $gitUser, $gitEmail) {
 
     include bootstrap
     include postgresql
+    
+    class { "apache2":
+        hostname => $hostname,
+        documentroot => $documentroot
+    }
     include mongodb
     include mysql
     include nginx

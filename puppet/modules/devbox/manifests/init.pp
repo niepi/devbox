@@ -5,6 +5,7 @@ class devbox ($hostname, $documentroot, $gitUser, $gitEmail) {
     }
 
     include bootstrap
+    include postgresql
     include mongodb
     include mysql
     include nginx

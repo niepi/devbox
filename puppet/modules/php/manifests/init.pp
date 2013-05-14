@@ -1,15 +1,15 @@
 class php {
 
-    exec { 'php54Prepare':
-    command => 'add-apt-repository -y ppa:ondrej/php5 ',
-    require => Package['python-software-properties'],
-    }
+        exec { 'php54Prepare':
+        command => 'add-apt-repository -y ppa:ondrej/php5  && apt-get update',
+        require => Package['python-software-properties'],
+        }
 
     # Install PHP packages
     $phpPackages = ["php5", "php5-cli", "php5-mysql", "php-pear", "php5-dev", "php-apc", "php5-mcrypt", "php5-gd", "php5-sqlite", "php5-curl", "php5-intl", "php5-xdebug", "php5-memcache", "php5-imagick"]
     package { $phpPackages:
         ensure => latest,
-        require => [Exec['php54Prepare','apt-get update']],
+        require => [Exec['php54Prepare']],
     }
 
     # Change configuration files

@@ -1,8 +1,14 @@
 class redis {
+
+    exec { 'redisPrepare':
+    command => 'add-apt-repository -y ppa:chris-lea/redis-server  && apt-get update',
+    require => Package['python-software-properties'],
+    }
+
     # Install redis
     package { 'redis-server':
         ensure => latest,
-        require => Exec['apt-get update']
+        require => Exec['redisPrepare','apt-get update']
     }
 
     # Enable the redis service

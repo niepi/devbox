@@ -1,0 +1,2 @@
+CREATE USER vagrant WITH PASSWORD 'vagrant';
+ALTER USER vagrant WITH SUPERUSER;

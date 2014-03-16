@@ -1,0 +1,31 @@
+       _              __           ____
+      | |            / _|         |___ \
+ _ __ | | __ _ _   _| |_ _ __ ___   __) |
+| '_ \| |/ _` | | | |  _| '_ ` _ \ |__ <
+| |_) | | (_| | |_| | | | | | | | |___) |
+| .__/|_|\__,_|\__, |_| |_| |_| |_|____/
+| |             __/ |
+|_|            |___/
+
+
+####################################
+#           Available URLs         #
+####################################
+
+Webapp:         http://localhost:8080/frontend_dev.php
+Rabbitmq:       http://localhost:55673  (guest/guest)
+Status page:    http://localhost:8090/
+Elasticsearch:  http://localhost:9201/_plugin/head
+Redis:          http://localhost:8181
+
+If this is the first time you boot up this vagrant image, make sure to initialize
+the database:
+
+cd /vagrant/playfm3
+./bin/init.sh
+./bin/loadDummyData.sh
+
+
+SSH tunnel to old server for running the imports:
+
+`ssh -L 1234:192.168.0.4:3306  USER@rootserver.play.fm -p 5500`

@@ -1,21 +1,19 @@
-class devbox ($hostname, $documentroot, $gitUser, $gitEmail) {
+class devbox () {
     # Set paths
     Exec {
         path => ["/usr/bin", "/bin", "/usr/sbin", "/sbin", "/usr/local/bin", "/usr/local/sbin"]
     }
 
+    include apache2
     include bootstrap
-    include postgresql
-    
-    class { "apache2":
-        hostname => $hostname,
-        documentroot => $documentroot
-    }
+    include composer
+    include elasticsearch
     include mongodb
     include mysql
-    include nginx
-    include nodejs
-    include php    
+    # include nginx
+    include nodejs    
+    include php
+    include postgresql
     include rabbitmq
     include redis
     include ruby

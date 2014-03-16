@@ -15,6 +15,24 @@ class redis {
     service { "redis-server":
         enable => true,
         ensure => running,
-        require => Package["redis-server"]
+        require => Package["redis-server"],
     }
+
+    exec { 'redis-commander':
+        command => 'npm install -g redis-commander',
+        require => [Package['nodejs'], Service["redis-server"]],
+    }
+
+    file { "/etc/init/redis-commander.conf":
+        ensure => file,
+        owner => "root",
+        group => "root",
+        source => "puppet:///modules/redis/redis-commander.conf",
+    }
+
+    service { "redis-commander":
+        ensure => running,
+        require => [Exec['redis-commander'], File['/etc/init/redis-commander.conf'],Package['nodejs'], Service["redis-server"]],
+    }    
+
 }

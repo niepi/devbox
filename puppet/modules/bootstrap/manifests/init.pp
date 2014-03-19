@@ -100,6 +100,14 @@ class bootstrap {
         require => Package['zsh'],
     }
 
+    file { "/home/vagrant/.oh-my-zsh/themes/niepi.zsh-theme":
+        ensure => file,
+        owner => "vagrant",
+        group => "vagrant",
+        source => "puppet:///modules/bootstrap/niepi.zsh-theme",
+        require => Package['zsh'],
+    }
+
     user { "ohmyzsh::user vagrant":
       ensure  => present,
       name    => vagrant,

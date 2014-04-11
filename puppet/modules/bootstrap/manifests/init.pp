@@ -68,15 +68,6 @@ class bootstrap {
       require => Package['rsyslog'],
     }
 
-    file { "/etc/rsyslog.conf":
-      ensure => file,
-      owner => root,
-      group => root,
-      source => "puppet:///modules/bootstrap/rsyslog.conf",
-      notify => Service['rsyslog'],
-      require => Package['rsyslog'],
-    }
-
     # see AppKernel::getCacheDir()
     file { "/etc/environment":
       content => inline_template("PATH=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games\"\nAPPLICATION_CONFIG=\"vagrant\"")
@@ -88,7 +79,8 @@ class bootstrap {
         user    => "vagrant",
         command => "git clone http://github.com/breidh/oh-my-zsh.git /home/vagrant/.oh-my-zsh",
         creates => "/home/vagrant/.oh-my-zsh",
-        require => [Package['git'], Package['zsh'], Package['curl']]
+        require => [Package['git'], Package['zsh'], Package['curl']],
+        
     }
 
 
@@ -97,7 +89,7 @@ class bootstrap {
         owner => "vagrant",
         group => "vagrant",
         source => "puppet:///modules/bootstrap/zshrc",
-        require => Package['zsh'],
+        require => [Package['zsh'],Exec["clone oh-my-zsh"]]
     }
 
     file { "/home/vagrant/.oh-my-zsh/themes/niepi.zsh-theme":
@@ -105,7 +97,7 @@ class bootstrap {
         owner => "vagrant",
         group => "vagrant",
         source => "puppet:///modules/bootstrap/niepi.zsh-theme",
-        require => Package['zsh'],
+        require => [Package['zsh'],Exec["clone oh-my-zsh"]]
     }
 
     user { "ohmyzsh::user vagrant":
@@ -118,7 +110,7 @@ class bootstrap {
     # Set the shell
     exec { "chsh -s /usr/bin/zsh vagrant":
         unless  => "grep -E '^vagrant.+:/usr/bin/zsh$' /etc/passwd",
-        require => Package['zsh']
+        require => [Package['zsh'],File["/home/vagrant/.oh-my-zsh/themes/niepi.zsh-theme","/home/vagrant/.zshrc"]]
     }
 
 }

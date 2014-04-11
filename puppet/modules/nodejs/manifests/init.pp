@@ -23,6 +23,6 @@ class nodejs {
         require => Exec['nodejsPrepare'],
     }
 
-    nodemodule { ['elasticsearchclient', 'redis'] : }
+    nodemodule { ['elasticsearchclient', 'redis', 'bower'] : }
 
 }
